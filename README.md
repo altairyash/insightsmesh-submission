@@ -7,10 +7,6 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ### Folders
 
 #### `app`
-Contains the main application logic and pages.
-- **favicon.ico**: Favicon for the application.
-- **globals.css**: Global CSS styles.
-- **layout.tsx**: Layout component for the app.
 - **page.tsx**: Main page of the application.
 - **api**: Contains API routes.
   - **chat/route.ts**: API route for chat functionality.
