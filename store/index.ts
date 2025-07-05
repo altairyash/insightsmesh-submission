@@ -4,17 +4,30 @@ import sessionsReducer from "./slices/sessionsSlice";
 import authReducer from "./slices/authSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { createTransform } from "redux-persist";
+import { encryptData, decryptData } from "../utils/encryption";
+
+// Create encryption transform
+const encryptionTransform = createTransform(
+  // Transform state on its way to being serialized and persisted.
+  (inboundState) => encryptData(inboundState),
+
+  // Transform state being rehydrated
+  (outboundState) => decryptData(outboundState)
+);
 
 // Persist config for auth
 const authPersistConfig = {
   key: "auth",
   storage,
+  transforms: [encryptionTransform],
 };
 
 // Persist config for sessions/chat data
 const sessionsPersistConfig = {
   key: "sessions",
   storage,
+  transforms: [encryptionTransform],
 };
 
 // Create persisted reducers

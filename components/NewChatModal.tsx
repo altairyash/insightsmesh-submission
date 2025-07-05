@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import FullScreenIcon from "./FullScreenIcon";
 import { RootState } from "@/store";
 import ChatActions from "./ChatActions";
+import { addTagToSession } from "@/store/slices/sessionsSlice";
 
 interface NewChatModalProps {
   open: boolean;
@@ -11,6 +12,17 @@ interface NewChatModalProps {
   children?: React.ReactNode;
 }
 
+const predefinedTags = [
+  "Important",
+  "Work",
+  "Personal",
+  "Urgent",
+  "Follow-up",
+  "Idea",
+  "Reference",
+  "Miscellaneous",
+];
+
 const NewChatModal: React.FC<NewChatModalProps> = ({
   open,
   onClose,
@@ -18,13 +30,15 @@ const NewChatModal: React.FC<NewChatModalProps> = ({
   children,
 }) => {
   const dispatch = useDispatch();
-  const chatData = useSelector((state: RootState) => {
-    const activeSessionId = state.sessions.activeSessionId;
-    return (
-      state.sessions.sessions.find((session) => session.id === activeSessionId)
-        ?.messages || []
-    );
-  });
+  const activeSessionId = useSelector(
+    (state: RootState) => state.sessions.activeSessionId
+  );
+
+  const handleAddTag = (tag: string) => {
+    if (activeSessionId) {
+      dispatch(addTagToSession({ sessionId: activeSessionId, tag }));
+    }
+  };
 
   if (!open) return null;
 
@@ -46,6 +60,20 @@ const NewChatModal: React.FC<NewChatModalProps> = ({
             >
               <FullScreenIcon className="w-6 h-6" />
             </button>
+            <select
+              className="border border-gray-300 rounded-md px-2 py-1 text-sm dark:text-gray-200"
+              onChange={(e) => handleAddTag(e.target.value)}
+            >
+              <option value="" disabled selected>
+                Add Tag
+              </option>
+              {predefinedTags.map((tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+            <ChatActions />
             <button
               className="text-gray-500 hover:text-white text-2xl font-bold rounded-full flex items-center justify-center bg-white/90 dark:bg-zinc-900/90 shadow focus:outline-none hover:bg-blue-600 dark:hover:bg-blue-600 focus:ring-2 focus:ring-blue-400"
               style={{ minWidth: 40, minHeight: 40 }}
@@ -55,7 +83,6 @@ const NewChatModal: React.FC<NewChatModalProps> = ({
             >
               ×
             </button>
-            <ChatActions />
           </div>
         </div>
         {/* Content Area */}

@@ -101,6 +101,29 @@ const sessionsSlice = createSlice({
       state.sessions = action.payload;
       state.activeSessionId = state.sessions[0]?.id || null; // Set the active session to the first session if available
     },
+    addTagToSession(state, action: PayloadAction<{ sessionId: string; tag: string }>) {
+      const sessionIndex = state.sessions.findIndex((s) => s.id === action.payload.sessionId);
+      if (sessionIndex !== -1) {
+        const session = state.sessions[sessionIndex];
+        if (!session.tags.includes(action.payload.tag)) {
+          state.sessions = state.sessions.map((s, index) =>
+            index === sessionIndex
+              ? { ...s, tags: [...s.tags, action.payload.tag] }
+              : s
+          );
+        }
+      }
+    },
+    removeTagFromSession(state, action: PayloadAction<{ sessionId: string; tag: string }>) {
+      const sessionIndex = state.sessions.findIndex((s) => s.id === action.payload.sessionId);
+      if (sessionIndex !== -1) {
+        const session = state.sessions[sessionIndex];
+        state.sessions[sessionIndex] = {
+          ...session,
+          tags: session.tags.filter((t) => t !== action.payload.tag),
+        };
+      }
+    },
   },
 });
 
@@ -114,5 +137,7 @@ export const {
   deleteSession,
   setSessionMessages,
   LOAD_CHAT_DATA,
+  addTagToSession,
+  removeTagFromSession,
 } = sessionsSlice.actions;
 export default sessionsSlice.reducer;

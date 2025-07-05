@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
-import { selectSession, deleteSession } from "@/store/slices/sessionsSlice";
+import { selectSession, deleteSession, Session } from "@/store/slices/sessionsSlice";
 import { FaTrash } from "react-icons/fa";
 
 interface SessionListProps {
   collapsed?: boolean;
+  sessions: Session[];
 }
 
 const formatTime = (timestamp: number): string => {
@@ -19,10 +20,9 @@ const formatTime = (timestamp: number): string => {
   return date.toLocaleDateString();
 };
 
-export default function SessionList({ collapsed = false }: SessionListProps) {
+export default function SessionList({ collapsed = false, sessions }: SessionListProps) {
   const dispatch = useDispatch();
-  const { sessions, activeSessionId } = useSelector((state: RootState) => state.sessions);
-  const sessionsList = [...sessions].sort((a, b) => (b.lastUpdated ?? 0) - (a.lastUpdated ?? 0));
+  const { activeSessionId } = useSelector((state: RootState) => state.sessions);
 
   const handleSelectSession = (sessionId: string, e?: unknown) => {
     dispatch(selectSession(sessionId));
@@ -35,12 +35,12 @@ export default function SessionList({ collapsed = false }: SessionListProps) {
 
   return (
     <div className={`flex flex-col ${collapsed ? 'gap-2' : 'gap-3'}`}>
-      {sessionsList.length === 0 ? (
+      {sessions.length === 0 ? (
         <div className={`text-center text-gray-400 dark:text-gray-500 ${collapsed ? 'py-4 text-xs' : 'py-10 text-base font-medium'}`}>
           {collapsed ? <span className="rotate-90 block">⟶</span> : 'No sessions yet. Create your first chat!'}
         </div>
       ) : (
-        sessionsList.map((session) => (
+        sessions.map((session) => (
           <div
             key={session.id}
             className={`flex items-center justify-between p-2 border rounded-lg transition-all cursor-pointer

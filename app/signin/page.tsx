@@ -25,7 +25,7 @@ export default function SignInPage() {
 		);
 
 		if (user) {
-			const token = `secret-tokabc123`; // Example token generation
+			const token = `secret-tokabc123`;  
 			dispatch(signIn(token));
 			setError("");
 			router.push("/"); 

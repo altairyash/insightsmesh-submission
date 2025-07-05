@@ -6,16 +6,18 @@ import { initializeAuth, signOut, updateActivity } from "../store/slices/authSli
 import { RootState } from "../store";
 import LoginScreen from "./LoginScreen";
 
-const INACTIVITY_TIMEOUT = 600000; // 1 minute
+const INACTIVITY_TIMEOUT = 600000;  
 
 export default function AuthWrapper({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
   const { isAuthenticated, lastActivity } = useSelector((state: RootState) => state.auth);
-
+  const sessions = useSelector((state: RootState) => state.sessions.sessions);
   useEffect(() => {
     dispatch(initializeAuth());
   }, [dispatch]);
-
+useEffect(() => {
+  console.log(sessions);
+},[sessions])
   useEffect(() => {
     if (!isAuthenticated) return;
 
