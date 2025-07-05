@@ -12,7 +12,7 @@ export default function LoginScreen() {
 
   const handleSignIn = () => {
     if (username.trim() && password.trim()) {
-      dispatch(signIn(username)); // Pass only the username as the token
+      dispatch(signIn(username));
       setError("");
     } else {
       setError("Invalid username or password");

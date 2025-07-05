@@ -137,15 +137,13 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
       return 80;
     }
     const baseSize = 80;
-    const extraSize = Math.ceil(msg?.content?.length / 100) * 40; // Add extra size for longer messages
+    const extraSize = Math.ceil(msg?.content?.length / 100) * 40; 
     return baseSize + extraSize;
   };
 
-  // Calculate available height for the list
   const containerHeight =
-    typeof window !== "undefined" ? window.innerHeight - 200 : 600; // Adjust based on your layout
+    typeof window !== "undefined" ? window.innerHeight - 200 : 600; 
 
-  // Improved Row with even more modern, readable, and accessible chat bubble design
   const Row = ({
     index,
     style,
@@ -166,7 +164,7 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
           paddingLeft: isUser ? 48 : 0,
           paddingRight: isUser ? 0 : 48,
           marginBottom: 8,
-          minWidth: "100%", // Ensure full width for long messages
+          minWidth: "100%",  
         }}
       >
         <div
@@ -236,7 +234,7 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
             ref={listRef}
             height={containerHeight}
             itemCount={session.messages.length}
-            itemSize={getItemSize} // Use the function instead of fixed size
+            itemSize={getItemSize}  
             width={"100%"}
             overscanCount={8}
             className="min-h-full"

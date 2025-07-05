@@ -160,8 +160,8 @@ export default function Sidebar() {
         </div>
 
         <div
-          className={`border-t border-gray-100 dark:border-zinc-800 flex flex-col items-left transition-all duration-300 ${
-            collapsed ? "justify-center p-2" : "justify-between p-3 gap-2"
+          className={`border-t border-gray-100 dark:border-zinc-800 flex flex-col transition-all duration-300 ${
+            collapsed ? "justify-center items-center p-2" : "justify-between items-start p-3 gap-2"
           }`}
         >
           <div className="flex items-center gap-2">

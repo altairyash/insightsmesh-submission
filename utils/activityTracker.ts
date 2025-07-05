@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { signOut, updateActivity } from "../store/slices/authSlice";
 
-const INACTIVITY_TIMEOUT = 40000; // 5 minutes (configurable)
+const INACTIVITY_TIMEOUT = 40000;  
 
 export const setupActivityTracking = (dispatch: Dispatch<any>) => {
   const updateActivityOnEvent = () => {

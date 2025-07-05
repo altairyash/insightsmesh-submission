@@ -32,6 +32,8 @@ export default function ChatInput({
 
   const handleSend = async () => {
     if (!input.trim()) return;
+    const inputData = input;
+    setInput("");
 
     setIsDisabled(true);
 
@@ -44,7 +46,7 @@ export default function ChatInput({
     }
 
     if (targetSessionId) {
-      dispatch(addUserMessage({ sessionId: targetSessionId, content: input }));
+      dispatch(addUserMessage({ sessionId: targetSessionId, content: inputData }));
 
       try {
         const response = await fetch("/api/chat", {
@@ -53,7 +55,7 @@ export default function ChatInput({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            messages: [{ role: "user", content: input }],
+            messages: [{ role: "user", content: inputData }],
           }),
         });
 

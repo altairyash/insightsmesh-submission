@@ -1,7 +1,7 @@
 const nextConfig = {
   webpack: (config: { cache: boolean; }, { dev }: any) => {
     if (dev) {
-      config.cache = false; // Disable webpack cache in development
+      config.cache = false;
     }
     return config;
   },

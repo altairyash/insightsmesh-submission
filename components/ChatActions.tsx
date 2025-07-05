@@ -64,7 +64,6 @@ const ChatActions: React.FC<ChatActionsProps> = ({ className }) => {
             sessionId: activeSessionId,
           }));
 
-          // Ensure activeSessionId is valid before dispatching
           if (!activeSessionId) {
             console.error("No active session ID found. Cannot import chat data.");
             return;

@@ -85,7 +85,7 @@ const sessionsSlice = createSlice({
     deleteSession(state, action: PayloadAction<string>) {
       state.sessions = state.sessions.filter((session) => session.id !== action.payload);
       if (state.activeSessionId === action.payload) {
-        state.activeSessionId = state.sessions[0]?.id || null; // Select the first session if available
+        state.activeSessionId = state.sessions[0]?.id || null;
       }
     },
     setSessionMessages(state, action: PayloadAction<Message[]>) {
@@ -99,7 +99,7 @@ const sessionsSlice = createSlice({
     },
     LOAD_CHAT_DATA(state, action: PayloadAction<Session[]>) {
       state.sessions = action.payload;
-      state.activeSessionId = state.sessions[0]?.id || null; // Set the active session to the first session if available
+      state.activeSessionId = state.sessions[0]?.id || null;
     },
     addTagToSession(state, action: PayloadAction<{ sessionId: string; tag: string }>) {
       const sessionIndex = state.sessions.findIndex((s) => s.id === action.payload.sessionId);
