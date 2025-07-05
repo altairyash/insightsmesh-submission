@@ -1,6 +1,7 @@
 import SessionList from "./SessionList";
-import { useDispatch } from "react-redux";
-import { createSession } from "@/store/slices/sessionsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createSession, selectSession } from "@/store/slices/sessionsSlice";
+import { RootState } from "@/store";
 import { useState } from "react";
 import NewChatModal from "./NewChatModal";
 import ChatWindow from "./ChatWindow";
@@ -13,6 +14,9 @@ export default function Sidebar() {
   const [showModal, setShowModal] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
 
+  const { sessions, activeSessionId } = useSelector((state: RootState) => state.sessions);
+  const sessionsList = [...sessions].sort((a, b) => (b.lastUpdated ?? 0) - (a.lastUpdated ?? 0));
+
   const toggleCollapse = () => {
     setCollapsed((prev) => {
       if (!prev) setFullScreen(false);
@@ -24,6 +28,10 @@ export default function Sidebar() {
     dispatch(createSession());
     setShowModal(true);
     setFullScreen(false);
+  };
+
+  const handleSelectSession = (sessionId: string) => {
+    dispatch(selectSession(sessionId));
   };
 
   const modal =
@@ -52,7 +60,9 @@ export default function Sidebar() {
           border-r border-gray-200 dark:border-zinc-900
           bg-white/90 dark:bg-zinc-950/95 backdrop-blur-lg
           ${collapsed ? "w-16 min-w-[4rem] sm:w-16" : "w-full sm:w-[270px]"}
+          ${collapsed ? "absolute sm:relative" : "absolute sm:relative"}
         `}
+        style={{ zIndex: 50 }}
       >
         <button
           className={`absolute top-4 right-[-18px] z-10 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-full p-1 shadow transition-transform duration-200 ${
@@ -107,13 +117,26 @@ export default function Sidebar() {
                 Recent Sessions
               </h2>
             )}
-            <SessionList collapsed={collapsed} />
+            {!collapsed ? <SessionList collapsed={collapsed} />
+            : (
+              <div className="flex flex-col items-center gap-2">
+                {sessionsList.map((session) => (
+                  <div
+                    key={session.id}
+                    className="flex items-center justify-center w-10 h-10 bg-blue-50 dark:bg-blue-900/40 border-blue-400 dark:border-blue-700 rounded-full cursor-pointer"
+                    onClick={() => handleSelectSession(session.id)}
+                  >
+                    <span className="text-lg font-bold text-blue-700 dark:text-blue-200">
+                      {session.title.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : null}
         <div
-          className={`border-t border-gray-100 dark:border-zinc-800 flex items-center transition-all duration-300 ${
-            collapsed ? "justify-center p-2" : "justify-between p-3 gap-2"
-          }`}
+          className={`border-t border-gray-100 dark:border-zinc-800 flex flex-col items-left transition-all duration-300 ${collapsed ? "justify-center p-2" : "justify-between p-3 gap-2"}`}
         >
           <div className="flex items-center gap-2">
             <UserCircleIcon className="w-6 h-6 text-gray-400 dark:text-zinc-500" />
@@ -123,7 +146,7 @@ export default function Sidebar() {
               </span>
             )}
           </div>
-          <SignOutButton />
+          <SignOutButton collapsed={collapsed}/>
         </div>
       </aside>
     </>
