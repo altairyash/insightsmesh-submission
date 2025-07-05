@@ -44,7 +44,7 @@ export default function Sidebar() {
           setFullScreen(true);
         }}
       >
-        <div className="flex flex-col h-[70vh] min-h-[350px]">
+        <div className="flex flex-col h-[70vh]">
           <ChatWindow hideHeader />
         </div>
       </NewChatModal>
