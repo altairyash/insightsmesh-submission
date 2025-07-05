@@ -52,7 +52,7 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
   const getItemSize = (index: number) => {
     const msg = session.messages[index];
     if (!msg || !msg.content || msg.content.length === 0) {
-      console.error("Message or content is undefined", msg);
+      console.log("Message or content is undefined", msg);
       return 80; 
     }
     const baseSize = 80; 
@@ -101,7 +101,7 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
       {!hideHeader && (
         <div className="px-8 pt-8 pb-4 border-b border-gray-100 dark:border-zinc-800 flex items-center gap-2">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight leading-tight flex-1 truncate">
-            {session.title.slice(0, 7)}
+                {session.title.split(" ").slice(0, 3).join(" ")}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
             {session.summary}

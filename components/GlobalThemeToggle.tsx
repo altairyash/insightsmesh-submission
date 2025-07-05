@@ -12,7 +12,7 @@ export default function GlobalThemeToggle() {
 
   const buttonStyle: React.CSSProperties = {
     position: "absolute",
-    top: "20px",
+    bottom: "20px",
     right: "20px",
     padding: "10px",
     backgroundColor: theme === "light" ? "#007bff" : "#333",

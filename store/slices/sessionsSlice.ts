@@ -51,12 +51,12 @@ const sessionsSlice = createSlice({
     },
     updateSessionTitle(state, action: PayloadAction<{ id: string; title: string }>) {
       const session = state.sessions.find((s) => s.id === action.payload.id);
-      if (session) session.title = action.payload.title.slice(0, 7);
+      if (session) session.title = action.payload.title.split(" ").slice(0, 3).join(" ");
     },
     updateSessionTitleAndSummary(state, action: PayloadAction<{ sessionId: string; title: string; summary: string }>) {
       const session = state.sessions.find((s) => s.id === action.payload.sessionId);
       if (session) {
-        session.title = action.payload.title.slice(0, 7);
+        session.title = action.payload.title.split(" ").slice(0, 3).join(" ");
         session.summary = action.payload.summary;
       }
     },
