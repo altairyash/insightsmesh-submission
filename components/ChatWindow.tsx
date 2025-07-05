@@ -51,11 +51,12 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
 
   const getItemSize = (index: number) => {
     const msg = session.messages[index];
-    if (!msg || !msg.content) {
+    if (!msg || !msg.content || msg.content.length === 0) {
+      console.error("Message or content is undefined", msg);
       return 80; 
     }
     const baseSize = 80; // Base size for short messages
-    const extraSize = Math.ceil(msg.content.length / 100) * 40; // Add extra size for longer messages
+    const extraSize = Math.ceil(msg?.content?.length / 100) * 40; // Add extra size for longer messages
     return baseSize + extraSize;
   };
 
