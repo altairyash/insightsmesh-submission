@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { updateActivity } from "../store/slices/authSlice";
+import { signOut, updateActivity } from "../store/slices/authSlice";
 
 const INACTIVITY_TIMEOUT = 12000; // 5 minutes (configurable)
 
