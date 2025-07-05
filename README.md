@@ -4,15 +4,6 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Project Structure
 
-### Root Files
-
-- **next-env.d.ts**: TypeScript environment definitions for Next.js.
-- **next.config.js**: Basic Next.js configuration file.
-- **next.config.ts**: Extended Next.js configuration with custom webpack settings.
-- **package.json**: Contains project metadata and dependencies.
-- **postcss.config.mjs**: Configuration for PostCSS plugins.
-- **tsconfig.json**: TypeScript configuration file.
-
 ### Folders
 
 #### `app`
@@ -51,17 +42,6 @@ Reusable UI components.
 #### `lib`
 Contains shared libraries and utilities.
 
-#### `pages`
-Custom Next.js pages.
-
-#### `public`
-Static assets like images and icons.
-- **file.svg**: SVG icon.
-- **globe.svg**: SVG icon.
-- **next.svg**: SVG icon.
-- **vercel.svg**: SVG icon.
-- **window.svg**: SVG icon.
-
 #### `store`
 Redux store and slices for state management.
 - **index.ts**: Main Redux store configuration.
@@ -94,7 +74,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:4000](http://localhost:4000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
@@ -148,3 +128,30 @@ This project is licensed under the MIT License.
 
 ### Deployment
 - The application is built using Next.js and can be deployed to platforms like Vercel for production.
+
+## Additional Features
+
+### Chat Functionality
+- **Summary and Auto Title Generation**: After the first three messages in a chat, the application automatically generates a summary and title for the session.
+
+### User Activity
+- **Automatic Timeout**: The application automatically logs out users after 40 seconds of inactivity to ensure security and optimal resource usage.
+
+### Performance Optimization
+- **React-Window for Virtualization**: The application uses `react-window` to efficiently render chat messages, ensuring smooth performance even with large datasets.
+
+### Security and Persistence
+- **Persistent Encrypted Sessions**: User sessions are securely stored using encryption, ensuring data privacy and persistence across sessions.
+
+### Session Management
+- **Tagging and Filtering**: Users can add tags to chat sessions, delete tags, and filter sessions based on tags for better organization and retrieval.
+
+### Development and Testing
+- **Mock Users and Passwords**: The application includes mock user credentials for testing purposes:
+  - **Username**: `user1`
+  - **Password**: `password1`
+These credentials allow developers to simulate authentication flows during development.
+
+### Backend Routes
+- **Chat Route**: Handles chat-related functionality (`api/chat/route.ts`).
+- **Generate Title and Summary Route**: Generates titles and summaries for chat sessions (`api/generateTitleAndSummary/route.ts`).
