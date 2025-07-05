@@ -55,7 +55,7 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
       console.error("Message or content is undefined", msg);
       return 80; 
     }
-    const baseSize = 80; // Base size for short messages
+    const baseSize = 80; 
     const extraSize = Math.ceil(msg?.content?.length / 100) * 40; // Add extra size for longer messages
     return baseSize + extraSize;
   };
