@@ -8,7 +8,7 @@ export interface Message {
 export interface ChatSession {
   id: string;
   title: string;
-  summary?: string;
+  summary?: string; // Added summary field for one-line description
   messages: Message[];
   tags: string[];
   createdAt: number;

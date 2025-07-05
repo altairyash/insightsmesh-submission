@@ -2,7 +2,6 @@ import "./globals.css";
 import ReduxProvider from "../store/Provider";
 import { Providers } from "./providers";
 import ClientAuthProvider from "./ClientAuthProvider";
-import SignOutButton from "./SignOutButton";
 import GlobalThemeToggle from "../components/GlobalThemeToggle";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -2,11 +2,11 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signOut, updateActivity, initializeAuth } from "../store/slices/authSlice";
+import { initializeAuth, signOut, updateActivity } from "../store/slices/authSlice";
 import { RootState } from "../store";
 import LoginScreen from "./LoginScreen";
 
-const INACTIVITY_TIMEOUT = 60000; // 1 minute
+const INACTIVITY_TIMEOUT = 600000; // 1 minute
 
 export default function AuthWrapper({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();

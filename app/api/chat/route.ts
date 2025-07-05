@@ -1,6 +1,6 @@
 import { OpenAI } from 'openai';
-import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 // Initialize OpenAI with your API key
 // The API key is securely accessed from server-side environment variables.
@@ -42,6 +42,11 @@ export async function POST(req: Request) {
 
   } catch (error: any) {
     console.error('Error calling OpenAI API:', error);
+
+    // Debugging: Log the error type and details
+    console.error('Error type:', typeof error);
+    console.error('Error details:', error);
+
     // Handle different types of errors
     if (error.response) {
       console.error(error.response.status, error.response.data);
@@ -54,3 +59,4 @@ export async function POST(req: Request) {
     }
   }
 }
+

@@ -9,8 +9,11 @@ interface ChatActionsProps {
 
 const ChatActions: React.FC<ChatActionsProps> = ({ className }) => {
   const dispatch = useDispatch();
+  const activeSessionId = useSelector(
+    (state: RootState) => state.sessions.activeSessionId
+  );
+
   const chatData = useSelector((state: RootState) => {
-    const activeSessionId = state.sessions.activeSessionId;
     return (
       state.sessions.sessions.find((session) => session.id === activeSessionId)
         ?.messages || []
@@ -42,9 +45,21 @@ const ChatActions: React.FC<ChatActionsProps> = ({ className }) => {
     reader.onload = (e) => {
       try {
         const jsonData = JSON.parse(e.target?.result as string);
+        console.log(jsonData);
         if (Array.isArray(jsonData)) {
-          dispatch(setSessionMessages(jsonData));
-          console.log("Chat data successfully imported.");
+          const sessionMessages = jsonData.map((message) => ({
+            ...message,
+            sessionId: activeSessionId,
+          }));
+
+          // Ensure activeSessionId is valid before dispatching
+          if (!activeSessionId) {
+            console.error("No active session ID found. Cannot import chat data.");
+            return;
+          }
+
+          dispatch(setSessionMessages(sessionMessages));
+          console.log("Chat data successfully imported into active session.");
         } else {
           console.error("Invalid JSON format. Expected an array of messages.");
         }

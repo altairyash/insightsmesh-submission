@@ -28,7 +28,7 @@ export default function SignInPage() {
 			const token = `secret-tokabc123`; // Example token generation
 			dispatch(signIn(token));
 			setError("");
-			router.push("/"); // Redirect to dashboard after successful sign-in
+			router.push("/"); 
 		} else {
 			setError("Invalid username or password");
 		}

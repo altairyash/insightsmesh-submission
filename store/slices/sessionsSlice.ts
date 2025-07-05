@@ -10,6 +10,7 @@ export interface Message {
 export interface Session {
   id: string;
   title: string;
+  summary?: string; 
   messages: Message[];
   tags: string[];
   lastUpdated?: number;
@@ -50,7 +51,14 @@ const sessionsSlice = createSlice({
     },
     updateSessionTitle(state, action: PayloadAction<{ id: string; title: string }>) {
       const session = state.sessions.find((s) => s.id === action.payload.id);
-      if (session) session.title = action.payload.title;
+      if (session) session.title = action.payload.title.slice(0, 7);
+    },
+    updateSessionTitleAndSummary(state, action: PayloadAction<{ sessionId: string; title: string; summary: string }>) {
+      const session = state.sessions.find((s) => s.id === action.payload.sessionId);
+      if (session) {
+        session.title = action.payload.title.slice(0, 7);
+        session.summary = action.payload.summary;
+      }
     },
     addUserMessage(state, action: PayloadAction<{ sessionId: string; content: string }>) {
       const session = state.sessions.find((s) => s.id === action.payload.sessionId);
@@ -89,6 +97,10 @@ const sessionsSlice = createSlice({
         activeSession.lastUpdated = Date.now();
       }
     },
+    LOAD_CHAT_DATA(state, action: PayloadAction<Session[]>) {
+      state.sessions = action.payload;
+      state.activeSessionId = state.sessions[0]?.id || null; // Set the active session to the first session if available
+    },
   },
 });
 
@@ -96,9 +108,11 @@ export const {
   createSession,
   selectSession,
   updateSessionTitle,
+  updateSessionTitleAndSummary,
   addUserMessage,
   addBotMessage,
   deleteSession,
   setSessionMessages,
+  LOAD_CHAT_DATA,
 } = sessionsSlice.actions;
 export default sessionsSlice.reducer;

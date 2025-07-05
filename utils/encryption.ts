@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 
-const SECRET_KEY = "your-secret-key"; // Replace with a secure key
+const SECRET_KEY = "your-secret-key";
 
 export function encryptData(data: any): string {
   return CryptoJS.AES.encrypt(JSON.stringify(data), SECRET_KEY).toString();

@@ -49,9 +49,11 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
     return <NoChatUI />;
   }
 
-  // Function to calculate item size based on message content
   const getItemSize = (index: number) => {
     const msg = session.messages[index];
+    if (!msg || !msg.content) {
+      return 80; 
+    }
     const baseSize = 80; // Base size for short messages
     const extraSize = Math.ceil(msg.content.length / 100) * 40; // Add extra size for longer messages
     return baseSize + extraSize;
@@ -98,8 +100,11 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
       {!hideHeader && (
         <div className="px-8 pt-8 pb-4 border-b border-gray-100 dark:border-zinc-800 flex items-center gap-2">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight leading-tight flex-1 truncate">
-            {session.title}
+            {session.title.slice(0, 7)}
           </h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+            {session.summary}
+          </p>
           <ChatActions />
         </div>
       )}

@@ -53,10 +53,13 @@ export default function SessionList({ collapsed = false }: SessionListProps) {
           >
             <div className="flex-1 truncate">
               <div className="font-semibold text-gray-900 dark:text-white text-lg">
-                {session.title}
+                {session.title.slice(0, 7)}
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 {session.messages.length} messages • {formatTime(session.lastUpdated ?? 0)}
+              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                {session.summary || "No summary available"}
               </div>
             </div>
             {(!collapsed && <button

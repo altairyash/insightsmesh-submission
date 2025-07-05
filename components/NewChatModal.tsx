@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import FullScreenIcon from "./FullScreenIcon";
 import { RootState } from "@/store";
-import { setSessionMessages } from "@/store/slices/sessionsSlice";
 import ChatActions from "./ChatActions";
 
 interface NewChatModalProps {
@@ -28,44 +27,6 @@ const NewChatModal: React.FC<NewChatModalProps> = ({
   });
 
   if (!open) return null;
-
-  const handleDownload = () => {
-    if (!chatData || chatData.length === 0) {
-      console.error("No chat data available to download.");
-      return;
-    }
-
-    const blob = new Blob([JSON.stringify(chatData, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "chat.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const jsonData = JSON.parse(e.target?.result as string);
-        if (Array.isArray(jsonData)) {
-          dispatch(setSessionMessages(jsonData));
-          console.log("Chat data successfully imported.");
-        } else {
-          console.error("Invalid JSON format. Expected an array of messages.");
-        }
-      } catch (error) {
-        console.error("Error parsing JSON file:", error);
-      }
-    };
-    reader.readAsText(file);
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">

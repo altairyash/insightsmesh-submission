@@ -1,15 +1,11 @@
 import SessionList from "./SessionList";
 import { useDispatch } from "react-redux";
 import { createSession } from "@/store/slices/sessionsSlice";
-import {
-  UserCircleIcon,
-  PlusCircleIcon,
-  ChevronDoubleLeftIcon,
-} from "@heroicons/react/24/solid";
 import { useState } from "react";
 import NewChatModal from "./NewChatModal";
 import ChatWindow from "./ChatWindow";
 import SignOutButton from "../app/SignOutButton";
+import { ChevronDoubleLeftIcon, PlusCircleIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 
 export default function Sidebar() {
   const dispatch = useDispatch();

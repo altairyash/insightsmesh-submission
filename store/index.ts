@@ -5,23 +5,39 @@ import authReducer from "./slices/authSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-const persistConfig = {
+// Persist config for auth
+const authPersistConfig = {
   key: "auth",
   storage,
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+// Persist config for sessions/chat data
+const sessionsPersistConfig = {
+  key: "sessions",
+  storage,
+};
+
+// Create persisted reducers
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedSessionsReducer = persistReducer(sessionsPersistConfig, sessionsReducer);
 
 const store = configureStore({
   reducer: {
     theme: themeReducer,
-    sessions: sessionsReducer,
+    sessions: persistedSessionsReducer, // Now persisted
     auth: persistedAuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+        ignoredActions: [
+          "persist/PERSIST",
+          "persist/REHYDRATE",
+          "persist/REGISTER",
+          "persist/PURGE",
+          "persist/FLUSH",
+          "persist/PAUSE",
+        ],
       },
     }),
 });

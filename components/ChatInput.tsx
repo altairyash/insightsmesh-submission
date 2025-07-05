@@ -5,6 +5,7 @@ import {
   addUserMessage,
   addBotMessage,
   createSession,
+  updateSessionTitleAndSummary,
 } from "@/store/slices/sessionsSlice";
 
 interface ChatInputProps {
@@ -46,32 +47,80 @@ export default function ChatInput({
       dispatch(addUserMessage({ sessionId: targetSessionId, content: input }));
 
       try {
-        const response = await fetch('/api/chat', {
-          method: 'POST',
+        const response = await fetch("/api/chat", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            messages: [
-              { role: 'user', content: input },
-            ],
+            messages: [{ role: "user", content: input }],
           }),
         });
 
         if (response.ok) {
+          const state = (window as any).store?.getState?.() || {};
+
+          const activeSessionId = state.sessions?.activeSessionId;
           const data = await response.json();
           const accumulatedContent = data.reply;
           dispatch(
             addBotMessage({
-              sessionId: targetSessionId,
+              sessionId: activeSessionId,
               content: accumulatedContent,
             })
           );
+          const sessions = state.sessions?.sessions || [];
+          console.log("Redux state:", state);
+          console.log("Available sessions:", sessions);
+
+          const session = sessions.find((s: any) => s.id === activeSessionId);
+
+          if (!session) {
+            console.error("Session is undefined or null. Active Session ID:", activeSessionId);
+            console.error("Available session IDs:", sessions.map((s: any) => s.id));
+            return;
+          }
+
+          if (!session.messages || session.messages.length < 3) {
+            console.log("Messages are not properly defined or insufficient.", session);
+            return;
+          }
+
+          try {
+            const formattedMessages = session.messages.map((msg: any) => ({
+                  role: msg.role || "user", // Default role if missing
+                  content: msg.content,
+                }));
+
+            const response = await fetch(
+              "/api/generateTitleAndSummary",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ sessionId: activeSessionId, messages: formattedMessages }),
+              }
+            );
+
+            if (response.ok) {
+              const { title, summary } = await response.json();
+              const slicedSummary = summary.split(" ").slice(0, 6).join(" ") + "...";
+
+              dispatch(
+                updateSessionTitleAndSummary({ sessionId: targetSessionId, title, summary: slicedSummary })
+              );
+            } else {
+              console.error("Error generating title and summary:", response);
+            }
+          } catch (error) {
+            console.error("Error fetching title and summary:", error);
+          }
         } else {
-          console.error('Unexpected response format:', response);
+          console.error("Unexpected response format:", response);
         }
       } catch (error) {
-        console.error('Error fetching response:', error);
+        console.error("Error fetching response:", error);
       } finally {
         setIsDisabled(false);
       }

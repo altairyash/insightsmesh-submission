@@ -1,7 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  webpack: (config, { dev }) => {
+const nextConfig = {
+  webpack: (config: { cache: boolean; }, { dev }: any) => {
     if (dev) {
       config.cache = false; // Disable webpack cache in development
     }

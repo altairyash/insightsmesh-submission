@@ -25,7 +25,8 @@
     "react-redux": "^9.2.0",
     "react-window": "^1.8.11",
     "redux-persist": "^6.0.0",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "zod": "^3.25.74"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
