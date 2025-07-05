@@ -8,21 +8,23 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 #### `app`
 Contains the main application logic and pages.
-- **AuthProvider.tsx**: Provides authentication context.
-- **ClientAuthProvider.tsx**: Client-side authentication provider.
 - **favicon.ico**: Favicon for the application.
 - **globals.css**: Global CSS styles.
 - **layout.tsx**: Layout component for the app.
 - **page.tsx**: Main page of the application.
-- **providers.tsx**: Combines multiple providers for the app.
-- **RedirectWrapper.tsx**: Handles redirection logic.
-- **redux-provider.tsx**: Redux provider for state management.
-- **ReduxProvider.tsx**: Wrapper for Redux store.
-- **SignOutButton.tsx**: Button component for signing out.
 - **api**: Contains API routes.
   - **chat/route.ts**: API route for chat functionality.
   - **generateTitleAndSummary/route.ts**: API route for generating titles and summaries.
 - **signin/page.tsx**: Sign-in page.
+
+#### `wrappers`
+Contains wrapper components for various functionalities.
+- **AuthProvider.tsx**: Provides authentication context.
+- **ClientAuthProvider.tsx**: Client-side authentication provider.
+- **providers.tsx**: Combines multiple providers for the app.
+- **RedirectWrapper.tsx**: Handles redirection logic.
+- **redux-provider.tsx**: Redux provider for state management.
+- **ReduxProvider.tsx**: Wrapper for Redux store.
 
 #### `components`
 Reusable UI components.
