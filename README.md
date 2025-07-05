@@ -26,24 +26,6 @@ Contains wrapper components for various functionalities.
 - **redux-provider.tsx**: Redux provider for state management.
 - **ReduxProvider.tsx**: Wrapper for Redux store.
 
-#### `components`
-Reusable UI components.
-- **AuthWrapper.tsx**: Wrapper for authentication logic.
-- **Banner.tsx**: Displays a dismissible banner.
-- **ChatActions.tsx**: Handles chat-related actions.
-- **ChatInput.tsx**: Input field for chat messages.
-- **ChatWindow.tsx**: Main chat window component.
-- **FullScreenIcon.tsx**: SVG icon for fullscreen functionality.
-- **GlobalThemeToggle.tsx**: Toggles between light and dark themes.
-- **Layout.tsx**: Main layout component.
-- **LoginScreen.tsx**: Login screen component.
-- **NewChatModal.tsx**: Modal for creating new chat sessions.
-- **SessionList.tsx**: Displays a list of chat sessions.
-- **Sidebar.tsx**: Sidebar component for navigation.
-
-#### `lib`
-Contains shared libraries and utilities.
-
 #### `store`
 Redux store and slices for state management.
 - **index.ts**: Main Redux store configuration.
