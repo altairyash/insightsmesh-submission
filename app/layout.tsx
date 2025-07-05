@@ -1,7 +1,7 @@
 import "./globals.css";
 import ReduxProvider from "../store/Provider";
-import { Providers } from "./providers";
-import ClientAuthProvider from "./ClientAuthProvider";
+import { Providers } from "./wrappers/providers";
+import ClientAuthProvider from "./wrappers/ClientAuthProvider";
 import GlobalThemeToggle from "../components/GlobalThemeToggle";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

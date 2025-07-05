@@ -5,7 +5,7 @@ import { RootState } from "@/store";
 import { useState } from "react";
 import NewChatModal from "./NewChatModal";
 import ChatWindow from "./ChatWindow";
-import SignOutButton from "../app/SignOutButton";
+import SignOutButton from "./SignOutButton";
 import {
   ChevronDoubleLeftIcon,
   PlusCircleIcon,

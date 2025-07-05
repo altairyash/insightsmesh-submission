@@ -210,8 +210,9 @@ export default function ChatWindow({ hideHeader = false }: ChatWindowProps) {
           <select
             className="border border-gray-300 rounded-md px-2 py-1 text-sm"
             onChange={(e) => handleAddTag(e.target.value)}
+            defaultValue=""
           >
-            <option value="" disabled selected>
+            <option value="" disabled>
               Add Tag
             </option>
             {predefinedTags.map((tag) => (
